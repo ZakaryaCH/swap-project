@@ -19,11 +19,31 @@ index 65a9f9b..40796a4 100644
  }
  export declare enum TradeType {
      EXACT_INPUT = 0,
+diff --git a/node_modules/@uniswap/sdk/dist/entities/currency.d.ts b/node_modules/@uniswap/sdk/dist/entities/currency.d.ts
+index 535b464..f558d56 100644
+--- a/node_modules/@uniswap/sdk/dist/entities/currency.d.ts
++++ b/node_modules/@uniswap/sdk/dist/entities/currency.d.ts
+@@ -7,6 +7,7 @@ export declare class Currency {
+     readonly decimals: number;
+     readonly symbol?: string;
+     readonly name?: string;
++
+     /**
+      * The only instance of the base class `Currency`.
+      */
 diff --git a/node_modules/@uniswap/sdk/dist/entities/token.d.ts b/node_modules/@uniswap/sdk/dist/entities/token.d.ts
-index 3b5b50b..c9a88b1 100644
+index 3b5b50b..916223c 100644
 --- a/node_modules/@uniswap/sdk/dist/entities/token.d.ts
 +++ b/node_modules/@uniswap/sdk/dist/entities/token.d.ts
-@@ -25,9 +25,6 @@ export declare class Token extends Currency {
+@@ -6,6 +6,7 @@ import { Currency } from './currency';
+ export declare class Token extends Currency {
+     readonly chainId: ChainId;
+     readonly address: string;
++
+     constructor(chainId: ChainId, address: string, decimals: number, symbol?: string, name?: string);
+     /**
+      * Returns true if the two tokens are equivalent, i.e. have the same chainId and address.
+@@ -25,9 +26,6 @@ export declare class Token extends Currency {
   */
  export declare function currencyEquals(currencyA: Currency, currencyB: Currency): boolean;
  export declare const WETH: {
@@ -35,3 +55,45 @@ index 3b5b50b..c9a88b1 100644
 +    56: Token;
 +    97: Token;
  };
+diff --git a/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js b/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js
+index a4450f3..7553ef9 100644
+--- a/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js
++++ b/node_modules/@uniswap/sdk/dist/sdk.cjs.development.js
+@@ -20,11 +20,11 @@ var IUniswapV2Pair = _interopDefault(require('@uniswap/v2-core/build/IUniswapV2P
+ var _SOLIDITY_TYPE_MAXIMA;
+ 
+ (function (ChainId) {
+-  ChainId[ChainId["MAINNET"] = 1] = "MAINNET";
+-  ChainId[ChainId["ROPSTEN"] = 3] = "ROPSTEN";
+-  ChainId[ChainId["RINKEBY"] = 4] = "RINKEBY";
+-  ChainId[ChainId["G\xD6RLI"] = 5] = "G\xD6RLI";
+-  ChainId[ChainId["KOVAN"] = 42] = "KOVAN";
++  ChainId[ChainId["MAINNET"] = 56] = "MAINNET";
++  ChainId[ChainId["ROPSTEN"] = 97] = "ROPSTEN";
++  ChainId[ChainId["RINKEBY"] = 97] = "RINKEBY";
++  ChainId[ChainId["G\xD6RLI"] = 97] = "G\xD6RLI";
++  ChainId[ChainId["KOVAN"] = 97] = "KOVAN";
+ })(exports.ChainId || (exports.ChainId = {}));
+ 
+ (function (TradeType) {
+diff --git a/node_modules/@uniswap/sdk/dist/sdk.esm.js b/node_modules/@uniswap/sdk/dist/sdk.esm.js
+index 6c34a78..98b6849 100644
+--- a/node_modules/@uniswap/sdk/dist/sdk.esm.js
++++ b/node_modules/@uniswap/sdk/dist/sdk.esm.js
+@@ -16,11 +16,11 @@ var _SOLIDITY_TYPE_MAXIMA;
+ var ChainId;
+ 
+ (function (ChainId) {
+-  ChainId[ChainId["MAINNET"] = 1] = "MAINNET";
+-  ChainId[ChainId["ROPSTEN"] = 3] = "ROPSTEN";
+-  ChainId[ChainId["RINKEBY"] = 4] = "RINKEBY";
+-  ChainId[ChainId["G\xD6RLI"] = 5] = "G\xD6RLI";
+-  ChainId[ChainId["KOVAN"] = 42] = "KOVAN";
++  ChainId[ChainId["MAINNET"] = 56] = "MAINNET";
++  ChainId[ChainId["ROPSTEN"] = 97] = "ROPSTEN";
++  ChainId[ChainId["RINKEBY"] = 97] = "RINKEBY";
++  ChainId[ChainId["G\xD6RLI"] = 97] = "G\xD6RLI";
++  ChainId[ChainId["KOVAN"] = 97] = "KOVAN";
+ })(ChainId || (ChainId = {}));
+ 
+ var TradeType;

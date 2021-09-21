@@ -59,14 +59,14 @@ export default function useWrapCallback(
                     value: `0x${inputAmount.raw.toString(16)}`,
                   });
                   addTransaction(txReceipt, {
-                    summary: `Wrap ${inputAmount.toSignificant(6)} ETH to WETH`,
+                    summary: `Wrap ${inputAmount.toSignificant(6)} BNB to WBNB`,
                   });
                 } catch (error) {
                   console.error("Could not deposit", error);
                 }
               }
             : undefined,
-        inputError: sufficientBalance ? undefined : "Insufficient ETH balance",
+        inputError: sufficientBalance ? undefined : "Insufficient BNB balance",
       };
     } else if (
       currencyEquals(WETH[chainId], inputCurrency) &&
@@ -84,14 +84,14 @@ export default function useWrapCallback(
                   addTransaction(txReceipt, {
                     summary: `Unwrap ${inputAmount.toSignificant(
                       6
-                    )} WETH to ETH`,
+                    )} WBNB to BNB`,
                   });
                 } catch (error) {
                   console.error("Could not withdraw", error);
                 }
               }
             : undefined,
-        inputError: sufficientBalance ? undefined : "Insufficient WETH balance",
+        inputError: sufficientBalance ? undefined : "Insufficient WBNB balance",
       };
     } else {
       return NOT_APPLICABLE;
