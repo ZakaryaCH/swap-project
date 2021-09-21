@@ -18,7 +18,9 @@ import {
   walletlink,
   fortmatic,
   portis,
+  bsc,
 } from "../../connectors";
+import BSCIcon from "../../assets/images/binance-coin-bnb-logo.svg";
 import CoinbaseWalletIcon from "../../assets/images/coinbaseWalletIcon.svg";
 import WalletConnectIcon from "../../assets/images/walletConnectIcon.svg";
 import FortmaticIcon from "../../assets/images/fortmaticIcon.png";
@@ -273,6 +275,12 @@ export default function AccountDetails({
       return (
         <IconWrapper size={16}>
           <img src={FortmaticIcon} alt={"fortmatic logo"} />
+        </IconWrapper>
+      );
+    } else if (connector === bsc) {
+      return (
+        <IconWrapper size={16}>
+          <img src={BSCIcon} alt={"bsc logo"} />
         </IconWrapper>
       );
     } else if (connector === portis) {

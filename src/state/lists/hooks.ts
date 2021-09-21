@@ -110,8 +110,8 @@ function combineMaps(
   map2: TokenAddressMap
 ): TokenAddressMap {
   return {
-    56: { ...map1[56], ...map2[56] },
-    97: { ...map1[97], ...map2[97] },
+    [ChainId.MAINNET]: { ...map1[ChainId.MAINNET], ...map2[ChainId.MAINNET] },
+    [ChainId.RINKEBY]: { ...map1[ChainId.RINKEBY], ...map2[ChainId.RINKEBY] },
   };
 }
 
