@@ -139,7 +139,7 @@ export default function RemoveLiquidity({
     );
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    ROUTER_ADDRESS
+    ROUTER_ADDRESS[chainId || 56]
   );
 
   const isArgentWallet = useIsArgentWallet();

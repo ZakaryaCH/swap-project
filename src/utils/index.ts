@@ -132,11 +132,16 @@ export function getContract(
 
 // account is optional
 export function getRouterContract(
-  _: number,
+  chainId: ChainId,
   library: Web3Provider,
   account?: string
 ): Contract {
-  return getContract(ROUTER_ADDRESS, IUniswapV2Router02ABI, library, account);
+  return getContract(
+    ROUTER_ADDRESS[chainId || 56],
+    IUniswapV2Router02ABI,
+    library,
+    account
+  );
 }
 
 export function escapeRegExp(string: string): string {

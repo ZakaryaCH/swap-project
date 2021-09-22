@@ -1,6 +1,7 @@
 import { AddressZero } from "@ethersproject/constants";
 import {
   BigintIsh,
+  ChainId,
   Currency,
   CurrencyAmount,
   ETHER,
@@ -30,12 +31,22 @@ import {
 } from "../state/wallet/hooks";
 
 export function useV1ExchangeAddress(
+  chainId?: ChainId,
   tokenAddress?: string
 ): string | undefined {
   const contract = useV1FactoryContract();
 
-  const inputs = useMemo(() => [tokenAddress], [tokenAddress]);
-  return useSingleCallResult(contract, "getPair", inputs)?.result?.[0];
+  const final = useSingleCallResult(contract, "getPair", [
+    chainId && Object.values(ChainId).includes(chainId)
+      ? WETH[chainId].address
+      : tokenAddress,
+    tokenAddress,
+  ]);
+
+  if (!tokenAddress) return undefined;
+
+  console.log(final?.result?.[0]);
+  return final?.result?.[0];
 }
 
 export class MockV1Pair extends Pair {
@@ -48,10 +59,13 @@ export class MockV1Pair extends Pair {
 }
 
 function useMockV1Pair(inputCurrency?: Currency): MockV1Pair | undefined {
+  const { chainId } = useActiveWeb3React();
+
   const token = inputCurrency instanceof Token ? inputCurrency : undefined;
 
   const isWETH = Boolean(token && token.equals(WETH[token.chainId]));
   const v1PairAddress = useV1ExchangeAddress(
+    chainId,
     isWETH ? undefined : token?.address
   );
   const tokenBalance = useTokenBalance(v1PairAddress, token);
@@ -67,6 +81,7 @@ function useMockV1Pair(inputCurrency?: Currency): MockV1Pair | undefined {
 }
 
 // returns all v1 exchange addresses in the user's token list
+// Doesn't get called
 export function useAllTokenV1Exchanges(): { [exchangeAddress: string]: Token } {
   const allTokens = useAllTokens();
   const factory = useV1FactoryContract();
@@ -75,6 +90,7 @@ export function useAllTokenV1Exchanges(): { [exchangeAddress: string]: Token } {
     [allTokens]
   );
 
+  console.log("- useAllTokenV1Exchanges -");
   const data = useSingleContractMultipleData(
     factory,
     "getExchange",
@@ -152,7 +168,7 @@ export function useV1Trade(
     pairs = [inputPair];
   }
   // if neither are ETH, it's token-to-token (if they both exist)
-  else if (inputPair && outputPair) {
+  if (inputPair && outputPair) {
     pairs = [inputPair, outputPair];
   }
 
@@ -174,6 +190,9 @@ export function useV1Trade(
   } catch (error) {
     console.debug("Failed to create V1 trade", error);
   }
+
+  console.log("V1 - v1Trade");
+  console.log(v1Trade);
   return v1Trade;
 }
 
@@ -188,6 +207,10 @@ export function getTradeVersion(trade?: Trade): Version | undefined {
 export function useV1TradeExchangeAddress(
   trade: Trade | undefined
 ): string | undefined {
+  const { chainId } = useActiveWeb3React();
+
+  console.log("useV1TradeExchangeAddress - trade");
+  console.log(trade);
   const tokenAddress: string | undefined = useMemo(() => {
     if (!trade) return undefined;
     const isV1 = getTradeVersion(trade) === Version.v1;
@@ -198,5 +221,8 @@ export function useV1TradeExchangeAddress(
       ? trade.outputAmount.token.address
       : undefined;
   }, [trade]);
-  return useV1ExchangeAddress(tokenAddress);
+  const result = useV1ExchangeAddress(chainId, tokenAddress);
+  console.log("useV1TradeExchangeAddress - result");
+  console.log(result);
+  return result;
 }

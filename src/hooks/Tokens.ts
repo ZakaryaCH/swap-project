@@ -4,7 +4,7 @@ import {
   useUnsupportedTokenList,
 } from "./../state/lists/hooks";
 import { parseBytes32String } from "@ethersproject/strings";
-import { Currency, ETHER, Token, currencyEquals } from "@uniswap/sdk";
+import { Currency, ETHER, Token, currencyEquals, ChainId } from "@uniswap/sdk";
 import { useMemo } from "react";
 import {
   useCombinedActiveList,
@@ -28,7 +28,7 @@ function useTokensFromMap(
   const userAddedTokens = useUserAddedTokens();
 
   return useMemo(() => {
-    if (!chainId) return {};
+    if (!chainId || !Object.values(ChainId).includes(chainId)) return {};
 
     // reduce to just tokens
     const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{

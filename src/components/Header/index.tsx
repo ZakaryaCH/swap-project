@@ -346,10 +346,10 @@ export const StyledMenuButton = styled.button`
 `;
 
 const NETWORK_LABELS: { [chainId in ChainId]?: string } = {
-  [ChainId.RINKEBY]: "Rinkeby",
-  [ChainId.ROPSTEN]: "Ropsten",
-  [ChainId.GÖRLI]: "Görli",
-  [ChainId.KOVAN]: "Kovan",
+  [ChainId.RINKEBY]: "TESTNET",
+  [ChainId.ROPSTEN]: "TESTNET",
+  [ChainId.GÖRLI]: "TESTNET",
+  [ChainId.KOVAN]: "TESTNET",
 };
 
 export default function Header() {
